@@ -1,0 +1,1 @@
+jt.flags.use_cuda = 1
