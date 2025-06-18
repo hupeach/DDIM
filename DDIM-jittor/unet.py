@@ -60,7 +60,7 @@ class ResidualBlock(Module):
                  in_channels:int,
                  out_channels:int,
                  emb_channels:int,
-                 n_groups:int=16,
+                 n_groups:int=32,
                  conv_shortcut:bool=True,
                  droupout:float=0.1
                  ):
@@ -76,7 +76,7 @@ class ResidualBlock(Module):
         super().__init__()
         self.norm1 = nn.GroupNorm(num_groups=n_groups,num_channels=in_channels)
         self.act1 = nn.SiLU()
-        self.conv1 = nn.Conv2d(in_channels,out_channels,kernel_size=3,stride=1,padding=1)
+        self.conv_res1 = nn.Conv2d(in_channels,out_channels,kernel_size=3,stride=1,padding=1)
 
         self.actt = nn.SiLU()
         self.time_emb = nn.Linear(emb_channels,out_channels)
@@ -109,7 +109,7 @@ class ResidualBlock(Module):
         # 第一个卷积层
         h = self.norm1(h)
         h = self.act1(h)
-        h = self.conv1(h)
+        h = self.conv_res1(h)
         # 嵌入时间
         t = self.actt(t)
         t = self.time_emb(t)
@@ -127,7 +127,7 @@ class AttentionBlock(Module):
     """
     自注意力机制
     """
-    def __init__(self,channels:int,n_groups:int=16):
+    def __init__(self,channels:int,n_groups:int=32):
         """
         初始化
         :param channels:输入通道数
@@ -176,7 +176,7 @@ class DownBlock(Module):
     由一个残差块和一个注意力组成,用于特征提取
     把in_channels变成out_channels
     """
-    def __init__(self,in_channels:int,out_channels:int,emb_channels:int,has_attention:bool):
+    def __init__(self,in_channels:int,out_channels:int,emb_channels:int,has_attention:bool,n_groups:int):
         """
         每一层中的一个Block初始化
         :param in_channels: 输入通道
@@ -185,9 +185,9 @@ class DownBlock(Module):
         :param has_attention: 是否存在注意力
         """
         super().__init__()
-        self.res = ResidualBlock(in_channels,out_channels,emb_channels)
+        self.res = ResidualBlock(in_channels,out_channels,emb_channels,n_groups=n_groups)
         if has_attention:
-            self.attn = AttentionBlock(out_channels)
+            self.attn = AttentionBlock(out_channels,n_groups=n_groups)
         else:
             self.attn = nn.Identity()
 
@@ -208,7 +208,7 @@ class UpBlock(Module):
     残差块加注意力
     由于跳跃连接存在,减少图片纹理丢失,与DownBlock不同之处就是与下采样过程同层的输出进行连接
     """
-    def __init__(self,in_channels:int,out_channels:int,emb_channels:int,has_attention:bool):
+    def __init__(self,in_channels:int,out_channels:int,emb_channels:int,has_attention:bool,n_groups:int):
         """
         初始化
         :param in_channels: 输入通道
@@ -217,9 +217,9 @@ class UpBlock(Module):
         :param has_attention: 是否存在注意力
         """
         super().__init__()
-        self.res = ResidualBlock(in_channels+out_channels,out_channels,emb_channels)
+        self.res = ResidualBlock(in_channels,out_channels,emb_channels,n_groups=n_groups)
         if has_attention:
-            self.attn = AttentionBlock(out_channels)
+            self.attn = AttentionBlock(out_channels,n_groups=n_groups)
         else:
             self.attn = nn.Identity()
 
@@ -239,16 +239,16 @@ class MiddleBlock(Module):
     unet的中间部分逻辑
     两个残差加上注意力组成
     """
-    def __init__(self,channels,emb_channels):
+    def __init__(self,channels,emb_channels,n_groups):
         """
         初始化
         :param channels:输入通道
         :param emb_channels: 时间维度
         """
         super().__init__()
-        self.res1 = ResidualBlock(channels,channels,emb_channels)
-        self.attn = AttentionBlock(channels)
-        self.res2 = ResidualBlock(channels,channels,emb_channels)
+        self.res1 = ResidualBlock(channels,channels,emb_channels,n_groups=n_groups)
+        self.attn = AttentionBlock(channels,n_groups=n_groups)
+        self.res2 = ResidualBlock(channels,channels,emb_channels,n_groups=n_groups)
 
     def execute(self,x:jt.Var,t:jt.Var):
         """
@@ -319,80 +319,76 @@ class UpSample(Module):
             raise ValueError("we just support with_conv and no_conv")
         return x
     
-class UNet(Module):
-    def __init__(self,img_channels:int,channels:int,resolution:list=None,has_attention:list=None,n_blocks:int=2):
+class UNet(nn.Module):
+    def __init__(
+        self,
+        image_channels: int = 3,
+        n_channels: int = 128,
+        resolution: list = (1, 2, 2, 2),
+        is_attn: list = (False, True, True, False),
+        n_blocks: int = 2,
+        n_groups: int = 32
+    ):
         super().__init__()
-        self.emb_channels = channels*4
-        self.conv1 = nn.Conv2d(img_channels,channels,kernel_size=3,stride=1,padding=1)
-        self.time_emb = TimeEmbedding(self.emb_channels)
-        self.conv = nn.Conv2d(img_channels,channels,kernel_size=3,padding=1)
-        if resolution is None:
-            resolution = [1,2,2,2]
-        if has_attention is None:
-            has_attention = [False,True,True,False]
-        n_resolution = len(resolution)
-        # 下采样
+        n_resolutions = len(resolution)
+        emb_channels = n_channels * 4
+        # 时间编码
+        self.time_emb = TimeEmbedding(emb_channels)
+        self.img_proj = nn.Conv2d(image_channels,n_channels,kernel_size=3,stride=1,padding=1)
         down = []
-        out_channels = in_channels = channels
-        for i in range(n_resolution):
+        in_channels = n_channels
+        # 下采样逻辑
+        for i in range(n_resolutions):
             # 层内逻辑
-            out_channels = in_channels*resolution[i]
+            out_channels = in_channels * resolution[i]
             for j in range(n_blocks):
-                down.append(DownBlock(in_channels,out_channels,self.emb_channels,has_attention[i]))
+                down.append(DownBlock(in_channels, out_channels, emb_channels, is_attn[i], n_groups=n_groups))
                 in_channels = out_channels
             # 层间逻辑
-            if i<n_resolution-1:
-                down.append(DownSample(out_channels))
+            if i < n_resolutions - 1:
+                down.append(DownSample(in_channels))
         self.down = nn.ModuleList(down)
-        # 中间过程
-        self.middle =MiddleBlock(out_channels,self.emb_channels)
-        # 上采样
+        # 中间层
+        self.middle = MiddleBlock(in_channels, emb_channels, n_groups=n_groups)
         up = []
-        for i in reversed(range(n_resolution)):
-            # 层内逻辑
+        # 上采样逻辑
+        for i in reversed(range(n_resolutions)):
             out_channels = in_channels
+            # 层内逻辑
             for j in range(n_blocks):
-                up.append(UpBlock(in_channels,out_channels,self.emb_channels,has_attention[i]))
+                up.append(UpBlock(in_channels + out_channels, out_channels, emb_channels, is_attn[i], n_groups=n_groups))
             out_channels = in_channels // resolution[i]
-            up.append(UpBlock(in_channels,out_channels,self.emb_channels,has_attention[i]))
+            # 跳跃连接
+            up.append(UpBlock(in_channels + out_channels, out_channels, emb_channels, is_attn[i], n_groups=n_groups))
             in_channels = out_channels
             # 层间逻辑
-            if i>0:
-                up.append(UpSample(out_channels))
+            if i > 0:
+                up.append(UpSample(in_channels))
         self.up = nn.ModuleList(up)
-        # 将最后结果调整输出
-        self.norm = nn.GroupNorm(32,out_channels)
+        # 对结果处理，恢复形状
+        self.norm = nn.GroupNorm(n_groups, n_channels)
         self.act = nn.SiLU()
-        self.out = nn.Conv2d(out_channels,img_channels,kernel_size=3,padding=1)
-
-    def execute(self,x:jt.Var,t:jt.Var):
-        """
-        :param x:经过处理的图片
-        :param t: 时间
-        :return: 生成的噪声
-        """
-        # 处理时间向量与初始图片
+        self.final = nn.Conv2d(n_channels, image_channels, 3, padding=1)
+        
+    
+    def execute(self,x: jt.Var,t: jt.Var):
         t = self.time_emb(t)
-        x = self.conv(x)
-        h = [x]
-        # 下采样
+        x = self.img_proj(x)
+        value = [x]
+        # 下采样，特征提取，并且记录每一个块的输出，用来跳跃连接
         for m in self.down:
-            x = m(x,t)
-            h.append(x)
-        # 中间过程
-        x = self.middle(x,t)
-        # 上采样过程
+            x = m(x, t)
+            value.append(x)
+        # 中间层，对更低维度的特征进行处理
+        x = self.middle(x, t)
+        # 上采样，跳跃连接，复原特征
         for m in self.up:
-            if isinstance(m,UpSample):
-                x = m(x,t)
-            else:
-                s = h.pop()
-                x = jt.concat((x,s),dim=1)  # 跳跃连接
-                x = m(x,t)
-        # 处理结果、还原并输出
-        x = self.norm(x)
-        x = self.out(self.act(x))
-        return x
+            if isinstance(m, UpSample) == False:
+                s = value.pop()
+                x = jt.concat([x,s], dim=1)
+            x = m(x, t)
+        # 恢复形状
+        return self.final(self.act(self.norm(x)))
             
 def test_unet_on_gpu():
     # -------------------- 环境准备 --------------------

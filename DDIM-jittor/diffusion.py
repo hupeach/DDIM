@@ -44,8 +44,6 @@ class DenoiseDiffusion:
         :param t_prev:上一步的时间
         :return: 在采样步骤中时间t的sigma
         """
-        if self.eta == 0.0:
-            return jt.zeros_like(t)
         alpha_now = self.alpha.gather(-1,t)
         alpha_prev = self.alpha.gather(-1,t_prev)
         return (self.eta * ((1.-alpha_prev) / (1.-alpha_now+1e-5))*(1.-alpha_now/(alpha_prev+1e-5))).reshape(-1,1,1,1)
@@ -90,12 +88,14 @@ class DenoiseDiffusion:
         :return: 损失值
         """
         batch_size = x0.shape[0]
+        # t = jt.randint(low=0, high=self.timesteps, size=(batch_size // 2 + 1,))
+        # t = jt.cconat([t, self.timesteps - t - 1], dim=0)[:batch_size]
         t = jt.randint(0,self.timesteps,(batch_size,),dtype=jt.int32)
         if noise is None:
             noise = jt.randn_like(x0)
         xt = self.q_sample(x0,t,noise)
         noise_g = self.model(xt,t)
-        loss = compute_loss(noise,noise_g,type='mse')
+        loss = compute_loss(noise,noise_g,type='l2')
         return loss.float32()
 
 

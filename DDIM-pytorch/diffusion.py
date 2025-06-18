@@ -50,8 +50,6 @@ class DenoiseDiffusion:
         :param t_prev:上一步的时间
         :return: 在采样步骤中时间t的sigma
         """
-        if self.eta == 0.0:
-            return torch.zeros_like(t)
         alpha_now = self.alpha.gather(-1,t)
         alpha_prev = self.alpha.gather(-1,t_prev)
         return (self.eta * ((1.-alpha_prev) / (1.-alpha_now+1e-5))*(1.-alpha_now/(alpha_prev+1e-5))).reshape(-1,1,1,1)

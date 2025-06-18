@@ -1,1 +1,1 @@
-from Config import Config
+config_all

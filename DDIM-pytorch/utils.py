@@ -76,7 +76,7 @@ def get_time_schedule(name:str,timesteps:int,n_steps:int,device):
     elif name == 'quad':
         i = torch.arange(n_steps, dtype=torch.float32)
         # 计算平方根反比分布,平方采集
-        ratio = 1 - torch.sqrt(i / (n_steps - 1))
+        ratio = 1-torch.sqrt(i / (n_steps - 1))
         t = timesteps * ratio
         # 截断到[0, T]并取整
         t = torch.clamp(t,0,timesteps-1).round().long()
@@ -84,7 +84,7 @@ def get_time_schedule(name:str,timesteps:int,n_steps:int,device):
     elif name == 'cosine':
         i = torch.arange(n_steps, dtype=torch.float32)
         # 余弦分布采集
-        ratio = (1 + torch.cos(torch.pi * i / (n_steps - 1))) / 2
+        ratio = (1 + torch.cos(torch.tensor(math.pi) * i / (n_steps - 1))) / 2
         t = timesteps * ratio
         t = torch.clamp(t, 0, timesteps-1).long()
         return t.to(device)
@@ -108,7 +108,7 @@ def visualize(images,batch_size:int=16,save_path:str=None,dpi:int=300):
     images = (images+1)/2*255  # [-1, 1] -> [0, 255]
     images = images.astype(np.uint8)  # 转为整数格式
     # 创建 4×4 子图网格
-    plt.figure(figsize=(16, 16), dpi=dpi)
+    plt.figure(figsize=(4, 4), dpi=dpi)
     b = int(batch_size**0.5)
     for i in range(batch_size):
         plt.subplot(b,b,i + 1)

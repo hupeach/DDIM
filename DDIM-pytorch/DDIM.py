@@ -223,7 +223,7 @@ class DDIM:
         # 加载模型
         models = self.load_models()
         # 获取时间表
-        t_schedule = get_time_schedule('linear',self.timesteps,n_steps+1,device=self.device)
+        t_schedule = get_time_schedule('linear',self.timesteps,n_steps,device=self.device)
         # 集成模型
         with torch.no_grad():
             self.logger.info(f"{n_steps}步采样{self.batch_size}张图片")
@@ -254,7 +254,7 @@ class DDIM:
         os.makedirs('output', exist_ok=True)
         final_samples = result_sample[-1]  # shape:(B,C,H,W)
         save_img_path = os.path.join('output', f'samples_result_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.png')
-        visualize(final_samples,self.batch_size,save_img_path,dpi=1000)
+        visualize(final_samples,self.batch_size,save_img_path,dpi=100)
         self.logger.info(f"生成样本已保存至：{save_img_path}")
         return result_sample[-1]
     
@@ -267,7 +267,7 @@ class DDIM:
         """
         self.diffusion.model.eval()
         # 获取时间表
-        t_schedule = get_time_schedule('linear',self.timesteps,n_steps+1,device=self.device)
+        t_schedule = get_time_schedule('linear',self.timesteps,n_steps,device=self.device)
         # 集成模型
         with torch.no_grad():
             result_sample = []
@@ -313,7 +313,7 @@ class DDIM:
         with torch.no_grad():
             # 计算需要生成的剩余样本数和批次数量
             # 加载模型
-            model = self.load_models()[2]
+            model = self.load_models()[0]
             remaining = total_n_samples - start_id
             n_rounds = (remaining + batch_size - 1) // batch_size  # 向上取整
 

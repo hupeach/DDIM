@@ -10,7 +10,7 @@ class Config:
         self.eta = 0.0  # 控制随机性的参数
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'  # 运算设备
         self.batch_size = 128  # 一批输入数据的大小
-        self.epoch = 50  # 训练轮次
+        self.epoch = 200  # 训练轮次
         self.img_channels = 3  # 输入图像通道数
         self.channels = 128  # 将图像映射到的特征子空间数
         self.img_size = 32  # 输入图像的大小
@@ -18,7 +18,7 @@ class Config:
         self.diffusion = DenoiseDiffusion(self.model,self.timesteps,self.eta,device=self.device)  # 扩散模型
         self.train_dataset = Datasets(train=True)  # 训练集
         self.test_dataset = Datasets(train=False)  # 测试集
-        self.optimizer = optim.Adam(self.diffusion.model.parameters(),lr=1e-4)  # 优化器
+        self.optimizer = optim.Adam(self.diffusion.model.parameters(),lr=5e-5)  # 优化器
 
 # class Config:
 #     def __init__(self):

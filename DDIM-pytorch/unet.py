@@ -146,7 +146,7 @@ class AttentionBlock(nn.Module):
         q = q.permute(0,2,1)
         k = k.reshape(b,c,h*w)
         w_ = torch.bmm(q,k)
-        w_ = w_*(int(c)*-0.5)
+        w_ = w_*(int(c)**-0.5)
         w_ = nn.functional.softmax(w_, dim=2)
         # 得到价值
         v = v.reshape(b,c,h*w)
