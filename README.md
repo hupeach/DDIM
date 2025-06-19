@@ -67,6 +67,10 @@
        |η=1.0|35.2685|23.9264|23.3636|24.7969|
   - 采样结果展示（20步采样64张图片）
 	 - eta =0.0 :（Jittor:20 steps use 1.834s vs Pytorch:20 steps use 0.779s）
+
+    		<div align=center>
+		<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png" width="360" height="210"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png" width="360" height="210">
+		</div>
     
 		![Jittor-step20-1.834s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.0.png)![Pytorch-step20-0.779s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.0.png)
      
