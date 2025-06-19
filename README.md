@@ -115,7 +115,7 @@
  - 训练脚本：train.py文件，自动准备数据，自动运行训练
    
 	```bash
-	python train.py -T 1000 -BS 256 -epoch 200 -lr 5e-5
+	python train.py -T 1000 -BS 128 -epoch 200 -lr 1e-4
 	```
 	- **-T**：扩散过程的时间步（默认1000）
 	- **-BS**：batch_size（默认128）
@@ -134,7 +134,7 @@
  - 测试脚本 ：test.py文件，自动运行FID分数测试
    
 	```bash
-	python test.py -samples 10000 -eta 0.5 -BS 256
+	python test.py -samples 10000 -eta 0.0 -BS 256
 	```
 	- **-samples**：采样的样本数（默认10000）
 	- **-eta**：采样的超参数（默认0.0）
