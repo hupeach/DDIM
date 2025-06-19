@@ -38,11 +38,10 @@
 	 - 集成学习：训练了三个模型，做了一个集成，但是最后没有采用，因为比较影响采样速度。
  # 实验
  - 损失曲线：可以看到损失相差不大(左Jittor右Pytorch)
-
-	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png" width="540" height="315"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png" width="540" height="315">
-
 	<div align=center>
-	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png"> 
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png" width="360" height="210"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png" width="360" height="210">
+	
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png" width="360" height="210"> 
 	</div>
 
  - 时间曲线：可以看到很明显的Jittor要快很多。（左Jittor右Pytorch）
