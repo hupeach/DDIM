@@ -39,8 +39,7 @@
  # 实验
  - 损失曲线：可以看到损失相差不大(左Jittor右Pytorch)
 
-	 ![Jittor损失]()![Pytorch损失](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png)
-	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png" width="180" height="105"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png" width="180" height="105">
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png" width="360" height="210"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png" width="360" height="210">
 
 	<div align=center>
 	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png"> 
