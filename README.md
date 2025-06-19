@@ -127,7 +127,7 @@
  - 采样脚本：sample.py文件，自动运行采样，BS要可开放，因为生成图片在一个画布，中间有开放运算。
    
    	```bash
-   	python sample.py -steps 20 -eta 0.0 -BS 64'
+   	python sample.py -steps 20 -eta 0.0 -BS 64
   	 ```
 	- **-steps**：采样步数（默认20）
 	- **-eta**：控制随机性的超参数（默认0.0）
