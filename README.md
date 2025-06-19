@@ -45,8 +45,8 @@
 
  - 时间曲线：可以看到很明显的Jittor要快很多。（左Jittor右Pytorch）
 	<div align=center>
-	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png" width="400" height="225"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png" width="400" height="225">
-	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_time.png" width="400" height="225"> 
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png" width="450" height="250"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png" width="450" height="250">
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_time.png" width="450" height="250"> 
 	</div>
 
 
