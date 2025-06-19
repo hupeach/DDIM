@@ -41,7 +41,7 @@
 
 	 ![Jittor损失](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png)![Pytorch损失](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png)
 	<div align=center>
-	<img src="[https://github.com/BIT-MJY/Active-SLAM-Based-on-Information-Theory/blob/master/img/1-2.png](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png)" width="180" height="105"> width="180" height="105"/>
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png" width="180" height="105"> width="180" height="105"/>
 	</div>
 
  - 时间曲线：可以看到很明显的Jittor要快很多。（左Jittor右Pytorch）
