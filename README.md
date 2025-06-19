@@ -52,58 +52,86 @@
 
  - 生成质量（T=1000的模型在10000样本采样下的FID）：
 	 - pytorch：
-    <div style="text-align: center;">
-  <table border="1" cellspacing="0" cellpadding="8" style="margin: 0 auto; border-collapse: collapse;">
-    <tr>
-      <th>pytorch</th>
-      <th>steps=10</th>
-      <th>steps=20</th>
-      <th>steps=50</th>
-      <th>steps=100</th>
-    </tr>
-    <tr>
-      <td>η=0.0</td>
-      <td>35.1979</td>
-      <td>26.2736</td>
-      <td>27.3667</td>
-      <td>30.3170</td>
-    </tr>
-    <tr>
-      <td>η=0.2</td>
-      <td>35.1298</td>
-      <td>26.4229</td>
-      <td>28.0837</td>
-      <td>29.7941</td>
-    </tr>
-    <tr>
-      <td>η=0.5</td>
-      <td>35.6484</td>
-      <td>26.9818</td>
-      <td>27.5941</td>
-      <td>29.8717</td>
-    </tr>
-    <tr>
-      <td>η=1.0</td>
-      <td>35.3288</td>
-      <td>27.0929</td>
-      <td>28.2088</td>
-      <td>29.3678</td>
-    </tr>
-  </table>
-</div>
-       |pytorch|steps=10|steps=20|steps=50|steps=100|
-       |--|--|--|--|--|
-       | η=0.0 | 35.1979 |26.2736|27.3667|30.3170|
-       |η=0.2|35.1298|26.4229|28.0837|29.7941|
-       |η=0.5|35.6484|26.9818|27.5941|29.8717|
-       |η=1.0|35.3288|27.0929|28.2088|29.3678|
+		<div style="text-align: center;">
+		  <table border="1" cellspacing="0" cellpadding="8" style="margin: 0 auto; border-collapse: collapse;">
+		    <tr>
+		      <th>pytorch</th>
+		      <th>steps=10</th>
+		      <th>steps=20</th>
+		      <th>steps=50</th>
+		      <th>steps=100</th>
+		    </tr>
+		    <tr>
+		      <td>η=0.0</td>
+		      <td>35.1979</td>
+		      <td>26.2736</td>
+		      <td>27.3667</td>
+		      <td>30.3170</td>
+		    </tr>
+		    <tr>
+		      <td>η=0.2</td>
+		      <td>35.1298</td>
+		      <td>26.4229</td>
+		      <td>28.0837</td>
+		      <td>29.7941</td>
+		    </tr>
+		    <tr>
+		      <td>η=0.5</td>
+		      <td>35.6484</td>
+		      <td>26.9818</td>
+		      <td>27.5941</td>
+		      <td>29.8717</td>
+		    </tr>
+		    <tr>
+		      <td>η=1.0</td>
+		      <td>35.3288</td>
+		      <td>27.0929</td>
+		      <td>28.2088</td>
+		      <td>29.3678</td>
+		    </tr>
+		  </table>
+		</div>
+
 	 - jittor：
-       |jittor|steps=10|steps=20|steps=50|steps=100|
-       |--|--|--|--|--|
-       | η=0.0 | 35.3697 |24.3581|23.1885|24.0099|
-       |η=0.2|35.7621|24.4647|23.4794|24.8441|
-       |η=0.5|35.2226|24.4424|23.4703|24.4026|
-       |η=1.0|35.2685|23.9264|23.3636|24.7969|
+		 <div style="text-align: center; margin-top: 20px;">
+		  <table border="1" cellspacing="0" cellpadding="8" style="margin: 0 auto; border-collapse: collapse;">
+		    <tr>
+		      <th>jittor</th>
+		      <th>steps=10</th>
+		      <th>steps=20</th>
+		      <th>steps=50</th>
+		      <th>steps=100</th>
+		    </tr>
+		    <tr>
+		      <td>η=0.0</td>
+		      <td>35.3697</td>
+		      <td>24.3581</td>
+		      <td>23.1885</td>
+		      <td>24.0099</td>
+		    </tr>
+		    <tr>
+		      <td>η=0.2</td>
+		      <td>35.7621</td>
+		      <td>24.4647</td>
+		      <td>23.4794</td>
+		      <td>24.8441</td>
+		    </tr>
+		    <tr>
+		      <td>η=0.5</td>
+		      <td>35.2226</td>
+		      <td>24.4424</td>
+		      <td>23.4703</td>
+		      <td>24.4026</td>
+		    </tr>
+		    <tr>
+		      <td>η=1.0</td>
+		      <td>35.2685</td>
+		      <td>23.9264</td>
+		      <td>23.3636</td>
+		      <td>24.7969</td>
+		    </tr>
+		  </table>
+		</div>
   - 采样结果展示（20步采样64张图片）
 	 - eta =0.0 :（Jittor:20 steps use 1.834s vs Pytorch:20 steps use 0.779s）
     		<div align=center>
