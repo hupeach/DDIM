@@ -40,7 +40,6 @@
  - 损失曲线：可以看到损失相差不大(左Jittor右Pytorch)
 	<div align=center>
 	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png" width="360" height="210"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png" width="360" height="210">
-	
 	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png" width="360" height="210"> 
 	</div>
 
