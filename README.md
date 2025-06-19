@@ -115,23 +115,29 @@
 	
  # 附录
  - 训练脚本：train.py文件，自动运行训练
-	>python train.py -T 1000 -BS 256 -epoch 200 -lr 5e-5  
-	-T：扩散过程的时间步（默认1000）
-	 -BS：batch_size（默认128）
-	 -epoch:训练轮数（默认200）
-	 -lr:学习率（默认1e-4）
+	``bash
+	python train.py -T 1000 -BS 256 -epoch 200 -lr 5e-5
+	``
+	- **-T**：扩散过程的时间步（默认1000）
+	- **-BS**：batch_size（默认128）
+	- **-epoch**:训练轮数（默认200）
+	- **-lr**:学习率（默认1e-4）
 		 
- - 采样脚本：sample.py文件，自动运行采样，BS要可开放，因为生成图片在一个画布，中间有开放运算。 
-   	'python sample.py -steps 20 -eta 0.0 -BS 64'
+ - 采样脚本：sample.py文件，自动运行采样，BS要可开放，因为生成图片在一个画布，中间有开放运算。
+   	``bash
+   	python sample.py -steps 20 -eta 0.0 -BS 64'
+  	 ``
 	- **-steps**：采样步数（默认20）
 	- **-eta**：控制随机性的超参数（默认0.0）
 	- **-BS**：采样的batch_size（默认64）
 
  - 测试脚本 ：test.py文件，自动运行FID分数测试
-	>python test.py -samples 10000 -eta 0.5 -BS 256
-	-samples：采样的样本数（默认10000）
-	-eta：采样的超参数（默认0.0）
-   	-BS：采样的batch_size（默认256） 
+	``bash
+	python test.py -samples 10000 -eta 0.5 -BS 256
+	``
+	- **-samples**：采样的样本数（默认10000）
+	- **-eta**：采样的超参数（默认0.0）
+   	- **-BS**：采样的batch_size（默认256） 
 	
  # 参考代码仓库
  - [DDPM原论文实现](https://github.com/hojonathanho/diffusion)：个人感觉DDPM的官方实现框架代码真的很清晰，我整体的训练框架也是参考了这篇代码仓库。
