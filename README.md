@@ -52,6 +52,45 @@
 
  - 生成质量（T=1000的模型在10000样本采样下的FID）：
 	 - pytorch：
+    <div style="text-align: center;">
+  <table border="1" cellspacing="0" cellpadding="8" style="margin: 0 auto; border-collapse: collapse;">
+    <tr>
+      <th>pytorch</th>
+      <th>steps=10</th>
+      <th>steps=20</th>
+      <th>steps=50</th>
+      <th>steps=100</th>
+    </tr>
+    <tr>
+      <td>η=0.0</td>
+      <td>35.1979</td>
+      <td>26.2736</td>
+      <td>27.3667</td>
+      <td>30.3170</td>
+    </tr>
+    <tr>
+      <td>η=0.2</td>
+      <td>35.1298</td>
+      <td>26.4229</td>
+      <td>28.0837</td>
+      <td>29.7941</td>
+    </tr>
+    <tr>
+      <td>η=0.5</td>
+      <td>35.6484</td>
+      <td>26.9818</td>
+      <td>27.5941</td>
+      <td>29.8717</td>
+    </tr>
+    <tr>
+      <td>η=1.0</td>
+      <td>35.3288</td>
+      <td>27.0929</td>
+      <td>28.2088</td>
+      <td>29.3678</td>
+    </tr>
+  </table>
+</div>
        |pytorch|steps=10|steps=20|steps=50|steps=100|
        |--|--|--|--|--|
        | η=0.0 | 35.1979 |26.2736|27.3667|30.3170|
