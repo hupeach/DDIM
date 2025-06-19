@@ -37,13 +37,14 @@
 	 - 梯度裁剪：很经典的防止梯度爆炸的方法，最好要有，虽然有Adam的自适应学习率，但是梯度依旧容易爆炸。
 	 - 集成学习：训练了三个模型，做了一个集成，但是最后没有采用，因为比较影响采样速度。
  # 实验
- - 损失曲线：可以看到损失相差不大
+ - 损失曲线：可以看到损失相差不大(左Jittor右Pytorch)
 
 	 ![Jittor损失](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png)![Pytorch损失](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png)
+	<div align=center>
+	<img src="[https://github.com/BIT-MJY/Active-SLAM-Based-on-Information-Theory/blob/master/img/1-2.png](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png)" width="180" height="105"> width="180" height="105"/>
+	</div>
 
-	 ![损失对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png)
-
- - 时间曲线：可以看到很明显的Jittor要快很多。
+ - 时间曲线：可以看到很明显的Jittor要快很多。（左Jittor右Pytorch）
 
 
 	 ![Jittor训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png)![Pytorch训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png)
