@@ -17,13 +17,13 @@ import argparse
 
 def load_inception_model(device='cuda'):
     """
-    加载预训练的 Inception v3 模型（仅保留特征提取层）
+    加载预训练的 Inception v3 模型
     :param device: 计算设备
     :return: Inception v3 模型
     """
     model = inception_v3(pretrained=True, transform_input=False)
     model.eval()
-    # 移除最后全连接层（输出 1000 类），保留到 avgpool 层
+    # 移除最后全连接层
     model.fc = torch.nn.Identity() 
     return model.to(device)
 
@@ -40,7 +40,7 @@ def extract_features(model, data_loader, device):
     with torch.no_grad():
         for batch in tqdm(data_loader, desc="提取特征"):
             # 确保批次是 Tensor
-            if isinstance(batch, list):  # 真实数据：(图像张量, 标签张量)
+            if isinstance(batch, list):
                 images, _ = batch  # 提取图像部分
                 batch = images
             if not isinstance(batch, torch.Tensor):
@@ -50,35 +50,33 @@ def extract_features(model, data_loader, device):
             if batch.dim() != 4:
                 raise ValueError(f"输入张量维度错误：期望 4D，实际 {batch.dim()}D")
             
-            batch = batch.to(device)  # 数据已为 [-1,1] 的 Tensor，形状 [B, C, H, W]
+            batch = batch.to(device)
             
-            # -------------------- 预处理：调整为 Inception 输入要求 --------------------
-            # 步骤1：[-1,1] → [0,1]
+            # 预处理：调整为 Inception 输入要求
+            # [-1,1] → [0,1]
             batch_0_1 = (batch + 1) / 2.0
             
-            # 步骤2：调整大小到 299x299
+            # 调整大小到 299x299
             batch_resized = torch.nn.functional.interpolate(
                 batch_0_1,
                 size=(299, 299),
                 mode='bilinear',
                 align_corners=False
-            )  # 形状 [B, C, 299, 299]
+            )
             
-            # 步骤3：中心裁剪到 299x299
-            # 注意：interpolate 后尺寸可能略大于 299，需先裁剪再缩放
+            # 中心裁剪到 299x299
             batch_cropped = transforms.CenterCrop((299, 299))(batch_resized)  # 形状 [B, C, 299, 299]
             
-            # 步骤4：归一化
+            # 归一化
             mean = torch.tensor([0.5, 0.5, 0.5], device=device).view(1, 3, 1, 1)
             std = torch.tensor([0.5, 0.5, 0.5], device=device).view(1, 3, 1, 1)
             batch_normalized = (batch_cropped - mean) / std  # 形状 [B, C, 299, 299]
             
-            # -------------------- 提取 Inception 特征 --------------------
-            # 输入 Tensor 范围 [0,1]，尺寸 299x299，符合 Inception 要求
+            # 提取 Inception 特征
             batch_features = model(batch_normalized)
             features.append(batch_features.cpu())
     
-    # 合并所有特征为一个数组（形状 [N, 2048]）
+    # 合并所有特征为一个数组
     return torch.cat(features, dim=0).numpy()
 
 def load_generated_samples(gen_dir, num_samples, img_size, device):
@@ -98,11 +96,8 @@ def load_generated_samples(gen_dir, num_samples, img_size, device):
 
     # 定义生成数据的预处理
     def gen_transform(img_pil):
-        # 1. 转换为 [0,255] 的 NumPy 数组
         img_np = np.array(img_pil).astype(np.float32)
-        # 2. 转换为 [-1,1] 范围
         img_np = (img_np / 255.0) * 2.0 - 1.0
-        # 3. 转换为 [C, H, W] 张量
         return torch.tensor(img_np.transpose(2, 0, 1), dtype=torch.float32)
 
     # 创建自定义数据集
@@ -123,10 +118,10 @@ def load_generated_samples(gen_dir, num_samples, img_size, device):
     gen_dataset = GeneratedDataset(gen_files, gen_transform)
     gen_loader = torch.utils.data.DataLoader(
         gen_dataset,
-        batch_size=config.batch_size,  # 与训练时的 batch_size 一致
-        shuffle=False,                 # 特征提取无需打乱顺序
-        num_workers=4,                 # 数据加载线程数
-        pin_memory=True                # 加速 GPU 内存拷贝
+        batch_size=config.batch_size,
+        shuffle=False,
+        num_workers=4,
+        pin_memory=True
     )
     return gen_loader
 
@@ -148,10 +143,10 @@ def calculate_fid(
     :param device: 计算设备
     :return: FID 分数
     """
-    # -------------------- 初始化 Inception 模型 --------------------
+    # 初始化 Inception 模型
     model = load_inception_model(device=device)
 
-    # -------------------- 加载真实数据 --------------------
+    # 加载真实数据
     print("加载真实数据集...")
     real_transform = transforms.Compose([
         transforms.Resize(img_size),          
@@ -174,11 +169,11 @@ def calculate_fid(
         batch_size=batch_size,
         shuffle=False,
         num_workers=4,
-        pin_memory=True  # 加速 GPU 内存拷贝
+        pin_memory=True
     )
     print(f"真实数据加载完成，样本数: {len(real_dataset)}")
 
-    # -------------------- 加载生成数据 --------------------
+    # 加载生成数据
     print("加载生成数据...")
     try:
         gen_loader = load_generated_samples(
@@ -191,7 +186,7 @@ def calculate_fid(
         raise RuntimeError(f"生成数据加载失败: {str(e)}")
     print(f"生成数据加载完成，样本数: {num_samples}")
 
-    # -------------------- 提取真实数据特征 --------------------
+    # 提取真实数据特征
     print("提取真实数据特征...")
     try:
         real_features = extract_features(model, real_loader, device)
@@ -199,7 +194,7 @@ def calculate_fid(
     except Exception as e:
         raise RuntimeError(f"真实数据特征提取失败: {str(e)}")
 
-    # -------------------- 提取生成数据特征 --------------------
+    # 提取生成数据特征
     print("提取生成数据特征...")
     try:
         gen_features = extract_features(model, gen_loader, device)
@@ -207,7 +202,7 @@ def calculate_fid(
     except Exception as e:
         raise RuntimeError(f"生成数据特征提取失败: {str(e)}")
 
-    # -------------------- 计算 FID --------------------
+    # 计算 FID
 
     # 计算均值和协方差矩阵
     mu_real, sigma_real = real_features.mean(axis=0), np.cov(real_features, rowvar=False)
@@ -218,7 +213,6 @@ def calculate_fid(
     try:
         cov_sqrt = sqrtm(cov_product)
     except np.linalg.LinAlgError:
-        # 数值不稳定时添加小量
         cov_sqrt = sqrtm(cov_product + 1e-6 * np.eye(sigma_gen.shape[0]))
 
     # 处理复数情况
