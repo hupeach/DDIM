@@ -68,25 +68,21 @@
        |η=0.5|35.2226|24.4424|23.4703|24.4026|
        |η=1.0|35.2685|23.9264|23.3636|24.7969|
   - 采样结果展示（20步采样64张图片）
-	 - eta =0.0 :
+	 - eta =0.0 :（Jittor:20 steps use 1.834s vs Pytorch:20 steps use 0.779s）
     
-		![Jittor-step20-1.834s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.0.png)
-  		![Pytorch-step20-0.779s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.0.png)
+		![Jittor-step20-1.834s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.0.png)![Pytorch-step20-0.779s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.0.png)
      
-	- eta = 0.2:
+	- eta = 0.2:（Jittor:20 steps use 1.833s vs Pytorch:20 steps use 0.777s）
     
-		![Jittor-step20-1.833s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.2.png)
-		![Pytorch-step20-0.777s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.2.png)
+		![Jittor-step20-1.833s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.2.png)![Pytorch-step20-0.777s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.2.png)
 
-	- eta = 0.5:
+	- eta = 0.5:（Jittor:20 steps use 1.782s vs Pytorch:20 steps use 0.784s）
     
-		![Jittor-step20-1.782s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.5.png)
-		![Pytorch-step20-0.784s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.5.png)
+		![Jittor-step20-1.782s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.5.png)![Pytorch-step20-0.784s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.5.png)
 
-	- eta = 1.0:
+	- eta = 1.0:（Jittor:20 steps use 1.795s vs Pytorch:20 steps use 0.783s）
     
-		![Jittor-step20-1.795s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D1.0.png)
-		![Pytorch-step20-0.783s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D1.0.png)
+		![Jittor-step20-1.795s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D1.0.png)![Pytorch-step20-0.783s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D1.0.png)
 
 - 实验结果发现与反思：
 	 - 发现：
