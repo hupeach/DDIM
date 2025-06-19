@@ -39,16 +39,14 @@
  # 实验
  - 损失曲线：可以看到损失相差不大
 
-	 ![Jittor损失](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png)
-	 ![Pytorch损失](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png)
+	 ![Jittor损失](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png)![Pytorch损失](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png)
 
 	 ![损失对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png)
 
  - 时间曲线：可以看到很明显的Jittor要快很多。
 
 
-	 ![Jittor训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png)
-	 ![Pytorch训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png)
+	 ![Jittor训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png)![Pytorch训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png)
 
 	 ![训练时间对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_time.png)
 
