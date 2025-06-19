@@ -17,8 +17,8 @@ class Config:
         self.test_dataset = Datasets(train=False,batch_size=self.batch_size)  # 测试集
         self.model = UNet(self.img_channels, self.channels)
         self.diffusion = DenoiseDiffusion(self.model, self.timesteps, self.eta)
-        self.lr = 5e-5  # 学习率
-        # 初始化优化器（初始学习率设为预热起始值）
+        self.lr = 1e-4  # 学习率
+        # 初始化优化器
         self.optimizer = optim.Adam(
             self.diffusion.model.parameters(), 
             lr=self.lr

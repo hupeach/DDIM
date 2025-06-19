@@ -246,7 +246,7 @@ class DDIM:
             os.makedirs('output', exist_ok=True)
             final_samples = result_sample[-1]  # shape:(B,C,H,W)
             save_img_path = os.path.join('output', f'samples_result_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.png')
-            visualize(final_samples,self.batch_size,save_img_path,dpi=300)
+            visualize(final_samples,self.batch_size,save_img_path,dpi=100)
             self.logger.info(f"生成样本已保存至：{save_img_path}")
 
     def sample_wihtout_save(self,model,x0:jt.Var=None,n_steps:int=50):

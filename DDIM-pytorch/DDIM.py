@@ -173,7 +173,7 @@ class DDIM:
             self.logger.info(f"测试损失更优（{test_loss:.4f}），已保存模型至 model/best_test_model.pkl")
 
         # 平均损失最小的模型
-        avg_loss = (train_loss + test_loss) / 2
+        avg_loss = (train_loss*5 + test_loss) / 6
         if avg_loss < self.min_avg_loss:
             self.min_avg_loss = avg_loss
             torch.save(self.diffusion.model.state_dict(), f'model/best_avg_model.pkl')
@@ -313,7 +313,7 @@ class DDIM:
         with torch.no_grad():
             # 计算需要生成的剩余样本数和批次数量
             # 加载模型
-            model = self.load_models()[0]
+            model = self.load_models()[2]
             remaining = total_n_samples - start_id
             n_rounds = (remaining + batch_size - 1) // batch_size  # 向上取整
 

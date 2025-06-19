@@ -104,5 +104,5 @@ class DenoiseDiffusion:
         xt = self.q_sample(x0,t,noise)
         self.model.to(x0.device)
         noise_g = self.model(xt,t)
-        return compute_loss(noise,noise_g,type='l2')
+        return compute_loss(noise,noise_g,type='mse')
 

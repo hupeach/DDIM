@@ -10,8 +10,8 @@ def sample():
                         help='采样步数（默认：20）')
     parser.add_argument('-eta', type=float, default=0.0, 
                         help='控制随机性的参数（默认：0.0）')
-    parser.add_argument('-BS', type=int, default=256, 
-                        help='采样批次大小（默认：256）')
+    parser.add_argument('-BS', type=int, default=64, 
+                        help='采样批次大小（默认：64）')
     args = parser.parse_args()
     config = Config()
     config.batch_size = args.BS

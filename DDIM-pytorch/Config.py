@@ -18,7 +18,7 @@ class Config:
         self.diffusion = DenoiseDiffusion(self.model,self.timesteps,self.eta,device=self.device)  # 扩散模型
         self.train_dataset = Datasets(train=True)  # 训练集
         self.test_dataset = Datasets(train=False)  # 测试集
-        self.optimizer = optim.Adam(self.diffusion.model.parameters(),lr=5e-5)  # 优化器
+        self.optimizer = optim.Adam(self.diffusion.model.parameters(),lr=1e-4)  # 优化器
 
 # class Config:
 #     def __init__(self):

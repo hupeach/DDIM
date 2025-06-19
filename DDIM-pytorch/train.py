@@ -9,10 +9,10 @@ def train():
                         help='扩散过程的总时间步（默认：1000）')
     parser.add_argument('-BS', type=int, default=256, 
                         help='采样批次大小（默认：256）')
-    parser.add_argument('-epoch', type=int, default=20, 
+    parser.add_argument('-epoch', type=int, default=200, 
                         help='训练轮数（默认：200）')
-    parser.add_argument('-lr', type=float, default=5e-5, 
-                        help='学习率（默认：5e-5）')
+    parser.add_argument('-lr', type=float, default=1e-4, 
+                        help='学习率（默认：1e-4）')
     args = parser.parse_args()
     config = Config()
     config.timesteps = args.T

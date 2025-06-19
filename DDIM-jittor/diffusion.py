@@ -88,14 +88,14 @@ class DenoiseDiffusion:
         :return: 损失值
         """
         batch_size = x0.shape[0]
-        # t = jt.randint(low=0, high=self.timesteps, size=(batch_size // 2 + 1,))
-        # t = jt.cconat([t, self.timesteps - t - 1], dim=0)[:batch_size]
+        # t = jt.randint(low=0, high=self.timesteps, shape=(batch_size // 2 + 1,))
+        # t = jt.concat([t, self.timesteps - t - 1], dim=0)[:batch_size]
         t = jt.randint(0,self.timesteps,(batch_size,),dtype=jt.int32)
         if noise is None:
             noise = jt.randn_like(x0)
         xt = self.q_sample(x0,t,noise)
         noise_g = self.model(xt,t)
-        loss = compute_loss(noise,noise_g,type='l2')
+        loss = compute_loss(noise,noise_g,type='mse')
         return loss.float32()
 
 
