@@ -114,7 +114,7 @@
 	 - 数据集加载：与pytorch不同的是自定义数据集一定要加入self.batch_size,self.num_worker,self.shuffle这三个，要不然会报错。
 	
  # 附录
- - 训练脚本：train.py文件，自动运行训练
+ - 训练脚本：train.py文件，自动准备数据，自动运行训练
    
 	```bash
 	python train.py -T 1000 -BS 256 -epoch 200 -lr 5e-5
