@@ -44,11 +44,11 @@
 	</div>
 
  - 时间曲线：可以看到很明显的Jittor要快很多。（左Jittor右Pytorch）
+	<div align=center>
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png" width="400" height="225"><img src="https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png" width="400" height="225">
+	<img src="https://github.com/hupeach/DDIM/blob/main/pictures/cmp_time.png" width="400" height="225"> 
+	</div>
 
-
-	 ![Jittor训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png)![Pytorch训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png)
-
-	 ![训练时间对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_time.png)
 
  - 生成质量（T=1000的模型在10000样本采样下的FID）：
 	 - pytorch：
