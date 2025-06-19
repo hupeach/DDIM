@@ -38,13 +38,13 @@
 	 - 集成学习：训练了三个模型，做了一个集成，但是最后没有采用，因为比较影响采样速度。
  # 实验
  - 损失曲线：可以看到损失相差不大
- ![Jittor损失](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png)
- ![Pytorch损失](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png)
- ![损失对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png)
+	 ![Jittor损失](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_loss.png)
+	 ![Pytorch损失](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_loss.png)
+	 ![损失对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_loss.png)
  - 时间曲线：可以看到很明显的Jittor要快很多。
- ![Jittor训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png)
- ![Pytorch训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png)
- ![训练时间对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_time.png)
+	 ![Jittor训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/jittor_time.png)
+	 ![Pytorch训练时间](https://github.com/hupeach/DDIM/blob/main/pictures/pytorch_time.png)
+	 ![训练时间对比](https://github.com/hupeach/DDIM/blob/main/pictures/cmp_time.png)
  - 生成质量（T=1000的模型在10000样本采样下的FID）：
 	 - pytorch：
        |pytorch|steps=10|steps=20|steps=50|steps=100|
@@ -62,17 +62,17 @@
        |η=1.0|35.2685|23.9264|23.3636|24.7969|
   - 采样结果展示（20步采样64张图片）
 	 - eta =0.0 :
-	![Jittor-step20-1.834s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.0.png)
-  	![Pytorch-step20-0.779s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.0.png)
+		![Jittor-step20-1.834s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.0.png)
+  		![Pytorch-step20-0.779s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.0.png)
 	- eta = 0.2:
-	![Jittor-step20-1.833s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.2.png)
-	![Pytorch-step20-0.777s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.2.png)
+		![Jittor-step20-1.833s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.2.png)
+		![Pytorch-step20-0.777s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.2.png)
 	- eta = 0.5:
-	![Jittor-step20-1.782s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.5.png)
-	![Pytorch-step20-0.784s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.5.png)
+		![Jittor-step20-1.782s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D0.5.png)
+		![Pytorch-step20-0.784s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D0.5.png)
 	- eta = 1.0:
-	![Jittor-step20-1.795s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D1.0.png)
-	![Pytorch-step20-0.783s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D1.0.png)
+		![Jittor-step20-1.795s](https://github.com/hupeach/DDIM/blob/main/DDIM-jittor/output/eta%3D1.0.png)
+		![Pytorch-step20-0.783s](https://github.com/hupeach/DDIM/blob/main/DDIM-pytorch/output/eta%3D1.0.png)
 - 实验结果发现与反思：
 	 - 发现：
 		 - FID变化趋势：pytorch和jittor版本大体相同。
