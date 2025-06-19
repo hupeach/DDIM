@@ -121,12 +121,11 @@
 	 -epoch:训练轮数（默认200）
 	 -lr:学习率（默认1e-4）
 		 
- - 采样脚本：sample.py文件，自动运行采样，BS要可开放，因为生成图片在一个画布，中间有开放运算。
- 
-	>python sample.py -steps 20 -eta 0.5 -BS 64
-	-steps：采样步数（默认20）
-	-eta：控制随机性的超参数（默认0.0）
-	-BS：采样的batch_size（默认64）
+ - 采样脚本：sample.py文件，自动运行采样，BS要可开放，因为生成图片在一个画布，中间有开放运算。 
+   	'python sample.py -steps 20 -eta 0.0 -BS 64'
+	- **-steps**：采样步数（默认20）
+	- **-eta**：控制随机性的超参数（默认0.0）
+	- **-BS**：采样的batch_size（默认64）
 
  - 测试脚本 ：test.py文件，自动运行FID分数测试
 	>python test.py -samples 10000 -eta 0.5 -BS 256
