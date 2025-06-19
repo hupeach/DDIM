@@ -12,7 +12,7 @@ def default_transform():
     """对数据进行预处理"""
     return transform.Compose([
         transform.RandomHorizontalFlip(),  # 水平翻转
-        transform.ToTensor(),  # 转换为Tensor（PIL Image → [0,1] CHW Tensor）
+        transform.ToTensor(),  # 转换为Tensor
         transform.ImageNormalize(
             mean=[0.5, 0.5, 0.5], 
             std=[0.5, 0.5, 0.5]     

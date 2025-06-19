@@ -102,10 +102,10 @@ def visualize(images,batch_size:int=16,save_path:str=None,dpi:int=300):
     """
     # 张量转 numpy
     if isinstance(images, jt.Var):
-        images = images.detach().cpu().numpy()  # 转到 CPU 并转为 numpy
+        images = images.detach().cpu().numpy()
         images = np.transpose(images, (0, 2, 3, 1))  # [B, H, W, C]
     # 归一化还原
-    images = (images+1)/2*255  # [-1, 1] -> [0, 255]
+    images = (images+1)/2*255
     images = images.astype(np.uint8)  # 转为整数格式
     # 创建 4×4 子图网格
     plt.figure(figsize=(4, 4), dpi=dpi)

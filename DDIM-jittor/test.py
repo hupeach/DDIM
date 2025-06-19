@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 class GeneratedDataset(Dataset):
     """
-    生成图像数据集类，正确继承Jittor的Dataset
+    生成图像数据集类
     """
     def __init__(self, file_list: List[str], transform_func):
         super().__init__()
@@ -407,8 +407,6 @@ def safe_rmtree(directory: str, verbose: bool = True) -> bool:
 
 
 def main():
-    """主函数示例"""
-    # 设置Jittor
     jt.flags.use_cuda = 1
     parser = argparse.ArgumentParser(description='训练过程')
     parser.add_argument('-samples', type=int, default=10000, 

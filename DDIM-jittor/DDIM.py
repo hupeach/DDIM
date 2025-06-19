@@ -303,7 +303,7 @@ class DDIM:
             # 加载模型
             model = self.load_models()[2]
             remaining = total_n_samples - start_id
-            n_rounds = (remaining + batch_size - 1) // batch_size  # 向上取整
+            n_rounds = (remaining + batch_size - 1) // batch_size
 
             for round_idx in tqdm.tqdm(range(n_rounds), desc="生成 FID 样本"):
                 # 生成随机噪声
